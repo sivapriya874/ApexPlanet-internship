@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Web Dev Internship Journey</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Trebuchet MS', sans-serif;
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 30%, #a1c4fd 70%, #c2e9fb 100%);
+    color: #2d2d2d;
+  }
+  header {
+    text-align: center;
+    padding: 50px 20px 30px;
+  }
+  header h1 {
+    font-size: 2.8em;
+    margin: 0;
+    color: #ff6f3c;
+    text-shadow: 2px 2px 0px #fff3;
+  }
+  header p.tagline {
+    font-size: 1.2em;
+    color: #34495e;
+    margin-top: 10px;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto 50px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+  .profile-pic {
+    display: block;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    border: 6px solid #ff9f1c;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+  h2 {
+    color: #ff5e62;
+    border-bottom: 3px dashed #ffb347;
+    padding-bottom: 8px;
+  }
+  p {
+    line-height: 1.7;
+    font-size: 1.05em;
+  }
+  ul.skills {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  ul.skills li {
+    background: #ffb347;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+  }
+  .links a {
+    display: inline-block;
+    margin: 8px 10px 0 0;
+    padding: 10px 18px;
+    background: #4ecdc4;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .links a:hover {
+    background: #ff6f3c;
+    transform: translateY(-3px);
+  }
+  #funBtn {
+    display: block;
+    margin: 30px auto 0;
+    padding: 14px 30px;
+    font-size: 1.1em;
+    background: linear-gradient(135deg, #ff6f3c, #ff9f1c);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255,111,60,0.4);
+    transition: transform 0.2s;
+  }
+  #funBtn:hover {
+    transform: scale(1.05);
+  }
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #34495e;
+    font-size: 0.9em;
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>🚀 My Web Development Internship Journey</h1>
+    <p class="tagline">45 Days of Learning HTML, CSS & JavaScript — One Step at a Time</p>
+  </header>
+
+  <div class="container">
+    <img class="profile-pic" src="https://api.dicebear.com/7.x/avataaars/svg?seed=WebDevIntern" alt="Intern Avatar">
+
+    <h2>About This Page</h2>
+    <p>
+      Hi! I'm currently doing a Web Development internship focused on HTML, CSS, and JavaScript.
+      This page is my Task 1 submission — a simple webpage built from scratch to practice the basics:
+      structuring content with HTML, styling it with CSS, and adding interactivity with JavaScript.
+    </p>
+
+    <h2>What I'm Learning</h2>
+    <ul class="skills">
+      <li>HTML Structure</li>
+      <li>CSS Styling</li>
+      <li>Flexbox & Grid</li>
+      <li>JavaScript Basics</li>
+      <li>DOM Manipulation</li>
+      <li>Responsive Design</li>
+    </ul>
+
+    <h2>Useful Links</h2>
+    <div class="links">
+      <a href="https://github.com" target="_blank">My GitHub</a>
+      <a href="https://linkedin.com" target="_blank">My LinkedIn</a>
+      <a href="https://apexplanet.in" target="_blank">ApexPlanet Internship</a>
+    </div>
+
+    <button id="funBtn" onclick="showFunFact()">Click Me for a Web Dev Fun Fact! 🎉</button>
+  </div>
+
+  <footer>
+    Built with 💻 + ☕ during my 45-Day Web Development Internship at ApexPlanet Software Pvt. Ltd.
+  </footer>
+
+  <script>
+    const funFacts = [
+      "The first website ever created is still online today!",
+      "JavaScript was created in just 10 days back in 1995!",
+      "CSS stands for Cascading Style Sheets — 'cascading' refers to how styles override each other.",
+      "There are over 1.1 billion websites on the internet today!",
+      "HTML is not a programming language — it's a markup language!"
+    ];
+
+    function showFunFact() {
+      const randomFact = funFacts[Math.floor(Math.random() * funFacts.length)];
+      alert("💡 Fun Fact: " + randomFact);
+    }
+  </script>
+
+</body>
+</html>
