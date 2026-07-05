@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 2 – Intermediate HTML, CSS & JavaScript</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Trebuchet MS', sans-serif;
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 30%, #a1c4fd 70%, #c2e9fb 100%);
+      color: #2d2d2d;
+      min-height: 100vh;
+    }
+
+    /* ===== NAVBAR – FLEXBOX ===== */
+    nav {
+      background: linear-gradient(90deg, #ff6f3c, #ff9f1c);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    nav .logo {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: white;
+      letter-spacing: 1px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.95em;
+      transition: opacity 0.2s;
+    }
+    nav ul li a:hover { opacity: 0.75; }
+
+    /* ===== PAGE HEADER ===== */
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+    header h1 {
+      font-size: 2.4em;
+      color: #ff6f3c;
+      text-shadow: 2px 2px 0px #fff3;
+    }
+    header p {
+      color: #34495e;
+      font-size: 1.1em;
+      margin-top: 8px;
+    }
+
+    /* ===== MAIN GRID LAYOUT – CSS GRID ===== */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      max-width: 1100px;
+      margin: 30px auto 50px;
+      padding: 0 20px;
+    }
+
+    /* ===== CARD ===== */
+    .card {
+      background: rgba(255,255,255,0.88);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+    .card h2 {
+      color: #ff5e62;
+      border-bottom: 3px dashed #ffb347;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      font-size: 1.3em;
+    }
+
+    /* ===== CONTACT FORM ===== */
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: #34495e;
+      font-size: 0.95em;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 1em;
+      font-family: inherit;
+      transition: border-color 0.3s;
+      background: #fafafa;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #ff6f3c;
+      background: #fff;
+    }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .error-msg {
+      color: #e74c3c;
+      font-size: 0.82em;
+      margin-top: 4px;
+      display: none;
+    }
+    .success-msg {
+      background: #2ecc71;
+      color: white;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+      margin-top: 14px;
+      display: none;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #ff6f3c, #ff9f1c);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.05em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255,111,60,0.35);
+      transition: transform 0.2s;
+    }
+    .btn:hover { transform: scale(1.03); }
+
+    /* ===== TO-DO LIST ===== */
+    .todo-input-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .todo-input-row input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 1em;
+      font-family: inherit;
+      transition: border-color 0.3s;
+    }
+    .todo-input-row input:focus {
+      outline: none;
+      border-color: #4ecdc4;
+    }
+    .todo-input-row button {
+      padding: 10px 18px;
+      background: #4ecdc4;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .todo-input-row button:hover { background: #38b2ac; }
+    #todo-list { list-style: none; }
+    #todo-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff8f0;
+      border-left: 5px solid #ffb347;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 0.97em;
+      animation: slideIn 0.3s ease;
+    }
+    #todo-list li.done span { text-decoration: line-through; color: #999; }
+    #todo-list li .task-text { cursor: pointer; flex: 1; }
+    .delete-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-size: 0.85em;
+      margin-left: 10px;
+      transition: background 0.2s;
+    }
+    .delete-btn:hover { background: #c0392b; }
+    .todo-count {
+      font-size: 0.85em;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-15px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #34495e;
+      font-size: 0.9em;
+    }
+    footer a { color: #ff6f3c; text-decoration: none; font-weight: bold; }
+
+    /* ===== RESPONSIVE – MEDIA QUERIES ===== */
+    @media (max-width: 768px) {
+      .main-grid { grid-template-columns: 1fr; }
+      header h1 { font-size: 1.7em; }
+      nav { justify-content: center; }
+      nav ul { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      nav .logo { font-size: 1.1em; }
+      .card { padding: 20px; }
+      header h1 { font-size: 1.4em; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR using FLEXBOX -->
+  <nav>
+    <div class="logo">🚀 Sivapriya | Web Dev Intern</div>
+    <ul>
+      <li><a href="#form-section">Contact Form</a></li>
+      <li><a href="#todo-section">To-Do List</a></li>
+      <li><a href="https://github.com/sivapriya874" target="_blank">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/sivapriya-tamilmani-09a112332" target="_blank">LinkedIn</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>📘 Task 2 – Intermediate HTML, CSS & JavaScript</h1>
+    <p>Contact Form + Form Validation + Responsive Layout + Dynamic To-Do List</p>
+  </header>
+
+  <!-- MAIN CONTENT using CSS GRID -->
+  <div class="main-grid">
+
+    <!-- LEFT: CONTACT FORM with JS Validation -->
+    <div class="card" id="form-section">
+      <h2>📬 Contact Me</h2>
+      <div class="form-group">
+        <label for="fname">Full Name *</label>
+        <input type="text" id="fname" placeholder="Enter your full name" />
+        <div class="error-msg" id="err-name">⚠️ Name is required.</div>
+      </div>
+      <div class="form-group">
+        <label for="femail">Email Address *</label>
+        <input type="email" id="femail" placeholder="Enter your email" />
+        <div class="error-msg" id="err-email">⚠️ Enter a valid email address.</div>
+      </div>
+      <div class="form-group">
+        <label for="fphone">Phone Number</label>
+        <input type="text" id="fphone" placeholder="Enter your phone (optional)" />
+        <div class="error-msg" id="err-phone">⚠️ Enter a valid 10-digit phone number.</div>
+      </div>
+      <div class="form-group">
+        <label for="fmsg">Message *</label>
+        <textarea id="fmsg" placeholder="Write your message here..."></textarea>
+        <div class="error-msg" id="err-msg">⚠️ Message cannot be empty.</div>
+      </div>
+      <button class="btn" onclick="validateForm()">Send Message 📨</button>
+      <div class="success-msg" id="success-msg">✅ Message sent successfully! Thank you.</div>
+    </div>
+
+    <!-- RIGHT: DYNAMIC TO-DO LIST -->
+    <div class="card" id="todo-section">
+      <h2>✅ My Learning To-Do List</h2>
+      <div class="todo-input-row">
+        <input type="text" id="todo-input" placeholder="Add a new task..."
+          onkeydown="if(event.key==='Enter') addTask()" />
+        <button onclick="addTask()">+ Add</button>
+      </div>
+      <p class="todo-count" id="todo-count">0 tasks remaining</p>
+      <ul id="todo-list"></ul>
+    </div>
+
+  </div>
+
+  <footer>
+    Built by
+    <a href="https://www.linkedin.com/in/sivapriya-tamilmani-09a112332" target="_blank">
+      Sivapriya Tamilmani
+    </a>
+    &nbsp;|&nbsp; Task 2 of 5 &nbsp;|&nbsp;
+    <a href="https://apexplanet.in" target="_blank">ApexPlanet Software Pvt. Ltd.</a>
+    Internship 🌟
+  </footer>
+
+  <script>
+    /* ============================
+       FORM VALIDATION
+    ============================ */
+    function validateForm() {
+      let isValid = true;
+
+      document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
+      document.getElementById('success-msg').style.display = 'none';
+
+      const name  = document.getElementById('fname').value.trim();
+      const email = document.getElementById('femail').value.trim();
+      const phone = document.getElementById('fphone').value.trim();
+      const msg   = document.getElementById('fmsg').value.trim();
+
+      if (!name) {
+        document.getElementById('err-name').style.display = 'block';
+        isValid = false;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email || !emailRegex.test(email)) {
+        document.getElementById('err-email').style.display = 'block';
+        isValid = false;
+      }
+
+      if (phone && !/^\d{10}$/.test(phone)) {
+        document.getElementById('err-phone').style.display = 'block';
+        isValid = false;
+      }
+
+      if (!msg) {
+        document.getElementById('err-msg').style.display = 'block';
+        isValid = false;
+      }
+
+      if (isValid) {
+        document.getElementById('success-msg').style.display = 'block';
+        document.getElementById('fname').value  = '';
+        document.getElementById('femail').value = '';
+        document.getElementById('fphone').value = '';
+        document.getElementById('fmsg').value   = '';
+      }
+    }
+
+    /* ============================
+       DYNAMIC TO-DO LIST
+    ============================ */
+    const defaultTasks = [
+      "Complete Task 1 – HTML Basics ✅",
+      "Complete Task 2 – Intermediate JS",
+      "Learn CSS Flexbox & Grid",
+      "Practice form validation"
+    ];
+
+    defaultTasks.forEach(t => addTask(t));
+
+    function addTask(text) {
+      const input = document.getElementById('todo-input');
+      const taskText = typeof text === 'string' ? text : input.value.trim();
+      if (!taskText) return;
+
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span class="task-text" onclick="toggleDone(this)">${taskText}</span>
+        <button class="delete-btn" onclick="deleteTask(this)">🗑 Delete</button>
+      `;
+      document.getElementById('todo-list').appendChild(li);
+      if (typeof text !== 'string') input.value = '';
+      updateCount();
+    }
+
+    function toggleDone(el) {
+      el.parentElement.classList.toggle('done');
+      updateCount();
+    }
+
+    function deleteTask(btn) {
+      btn.parentElement.remove();
+      updateCount();
+    }
+
+    function updateCount() {
+      const all       = document.querySelectorAll('#todo-list li').length;
+      const done      = document.querySelectorAll('#todo-list li.done').length;
+      const remaining = all - done;
+      document.getElementById('todo-count').textContent =
+        `${remaining} task${remaining !== 1 ? 's' : ''} remaining (${done} done)`;
+    }
+  </script>
+
+</body>
+</html>
