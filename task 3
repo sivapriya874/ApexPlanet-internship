@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 3 – Advanced Styling & JavaScript</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Trebuchet MS', sans-serif;
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 30%, #a1c4fd 70%, #c2e9fb 100%);
+      color: #2d2d2d;
+      min-height: 100vh;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      background: linear-gradient(90deg, #ff6f3c, #ff9f1c);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    nav .logo { font-size: 1.4em; font-weight: bold; color: white; }
+    nav ul { list-style: none; display: flex; gap: 20px; flex-wrap: wrap; }
+    nav ul li a {
+      color: white; text-decoration: none; font-weight: bold;
+      font-size: 0.95em; transition: opacity 0.2s;
+    }
+    nav ul li a:hover { opacity: 0.75; }
+
+    /* ===== HEADER ===== */
+    header { text-align: center; padding: 40px 20px 20px; }
+    header h1 { font-size: 2.4em; color: #ff6f3c; text-shadow: 2px 2px 0 #fff3; }
+    header p  { color: #34495e; font-size: 1.1em; margin-top: 8px; }
+
+    /* ===== SECTION WRAPPER ===== */
+    .section { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+    .card {
+      background: rgba(255,255,255,0.88);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+      margin-bottom: 30px;
+    }
+    .card h2 {
+      color: #ff5e62;
+      border-bottom: 3px dashed #ffb347;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      font-size: 1.3em;
+    }
+
+    /* ===== IMAGE CAROUSEL ===== */
+    .carousel-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      background: #1a1a2e;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .carousel-slide { min-width: 100%; position: relative; }
+    .carousel-slide img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      display: block;
+      border-radius: 16px;
+    }
+    .slide-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color: white;
+      padding: 20px;
+      font-size: 1.1em;
+      font-weight: bold;
+      border-radius: 0 0 16px 16px;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,111,60,0.85);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 44px; height: 44px;
+      font-size: 1.4em;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .carousel-btn:hover { background: #ff6f3c; }
+    .carousel-btn.prev { left: 12px; }
+    .carousel-btn.next { right: 12px; }
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .dot.active { background: #ff6f3c; }
+    .carousel-label {
+      text-align: center;
+      color: #888;
+      font-size: 0.9em;
+      margin-top: 6px;
+    }
+
+    /* ===== JOKE / API SECTION ===== */
+    .joke-box {
+      background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+      border-radius: 14px;
+      padding: 24px;
+      text-align: center;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border: 2px dashed #ffb347;
+    }
+    .joke-setup { font-size: 1.15em; font-weight: bold; color: #2d2d2d; }
+    .joke-punchline {
+      font-size: 1.05em; color: #ff6f3c;
+      font-style: italic; display: none;
+    }
+    .joke-loading { color: #999; font-size: 1em; }
+    .btn {
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #ff6f3c, #ff9f1c);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.05em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255,111,60,0.35);
+      transition: transform 0.2s;
+      margin-top: 10px;
+    }
+    .btn:hover { transform: scale(1.04); }
+    .btn-teal {
+      background: linear-gradient(135deg, #4ecdc4, #38b2ac);
+      box-shadow: 0 5px 15px rgba(78,205,196,0.35);
+    }
+
+    /* ===== RESPONSIVE SHOWCASE ===== */
+    .responsive-demo {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .res-box {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      border-top: 5px solid #ff6f3c;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .res-box .icon { font-size: 2.2em; margin-bottom: 8px; }
+    .res-box h3 { color: #ff5e62; font-size: 1em; margin-bottom: 6px; }
+    .res-box p { font-size: 0.85em; color: #555; line-height: 1.5; }
+
+    /* ===== FOOTER ===== */
+    footer { text-align: center; padding: 20px; color: #34495e; font-size: 0.9em; }
+    footer a { color: #ff6f3c; text-decoration: none; font-weight: bold; }
+
+    /* ===== MEDIA QUERIES ===== */
+    @media (max-width: 768px) {
+      header h1 { font-size: 1.7em; }
+      nav { justify-content: center; }
+      nav ul { justify-content: center; }
+      .responsive-demo { grid-template-columns: 1fr 1fr; }
+      .carousel-slide img { height: 220px; }
+    }
+    @media (max-width: 480px) {
+      header h1 { font-size: 1.3em; }
+      .card { padding: 18px; }
+      nav .logo { font-size: 1.1em; }
+      .responsive-demo { grid-template-columns: 1fr; }
+      .carousel-slide img { height: 180px; }
+      .joke-setup { font-size: 1em; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">🚀 Sivapriya | Web Dev Intern</div>
+    <ul>
+      <li><a href="#carousel-section">Carousel</a></li>
+      <li><a href="#joke-section">Joke API</a></li>
+      <li><a href="#responsive-section">Responsive</a></li>
+      <li><a href="https://github.com/sivapriya874" target="_blank">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/sivapriya-tamilmani-09a112332" target="_blank">LinkedIn</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>🎨 Task 3 – Advanced Styling & JavaScript</h1>
+    <p>Responsive Design + Image Carousel + Live API Data Fetching</p>
+  </header>
+
+  <!-- SECTION 1: IMAGE CAROUSEL -->
+  <div class="section" id="carousel-section">
+    <div class="card">
+      <h2>🖼️ Image Carousel (JavaScript)</h2>
+      <div class="carousel-wrapper">
+        <button class="carousel-btn prev" onclick="moveCarousel(-1)">&#8249;</button>
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=80" alt="Coding" />
+            <div class="slide-caption">🌐 HTML – The Skeleton of the Web</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80" alt="CSS" />
+            <div class="slide-caption">🎨 CSS – Making the Web Beautiful</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&q=80" alt="JavaScript" />
+            <div class="slide-caption">⚡ JavaScript – Bringing the Web to Life</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=900&q=80" alt="Team" />
+            <div class="slide-caption">🤝 Collaboration – The Heart of Dev Teams</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&q=80" alt="Web Dev" />
+            <div class="slide-caption">🚀 Web Development – My Internship Journey</div>
+          </div>
+        </div>
+        <button class="carousel-btn next" onclick="moveCarousel(1)">&#8250;</button>
+      </div>
+      <div class="carousel-dots" id="carouselDots"></div>
+      <p class="carousel-label" id="carouselLabel">Slide 1 of 5</p>
+    </div>
+  </div>
+
+  <!-- SECTION 2: FETCH DATA FROM API -->
+  <div class="section" id="joke-section">
+    <div class="card">
+      <h2>😂 Live Joke Fetcher – JavaScript API</h2>
+      <p style="color:#555; margin-bottom:18px; font-size:0.95em;">
+        Clicking the button fetches a brand new programming joke from a public API in real time —
+        this is <strong>DOM manipulation + Fetch API</strong> combined!
+      </p>
+      <div class="joke-box">
+        <div class="joke-setup" id="jokeSetup">Click the button below to fetch a joke! 👇</div>
+        <div class="joke-punchline" id="jokePunchline"></div>
+        <div class="joke-loading" id="jokeLoading" style="display:none;">⏳ Fetching joke...</div>
+      </div>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn" onclick="fetchJoke()">🎲 Get a Joke!</button>
+        <button class="btn btn-teal" onclick="revealPunchline()">🥁 Reveal Punchline</button>
+      </div>
+      <p style="text-align:center; font-size:0.82em; color:#999; margin-top:10px;">
+        Powered by <strong>JokeAPI (v2.dev)</strong> — real-time public API
+      </p>
+    </div>
+  </div>
+
+  <!-- SECTION 3: RESPONSIVE DESIGN DEMO -->
+  <div class="section" id="responsive-section">
+    <div class="card">
+      <h2>📱 Responsive Design – Media Queries in Action</h2>
+      <p style="color:#555; margin-bottom:18px; font-size:0.95em;">
+        This page adapts automatically to all screen sizes using CSS media queries.
+        Try resizing your browser window!
+      </p>
+      <div class="responsive-demo">
+        <div class="res-box">
+          <div class="icon">🖥️</div>
+          <h3>Desktop</h3>
+          <p>3-column grid layout. Full navigation bar. Large carousel images.</p>
+        </div>
+        <div class="res-box">
+          <div class="icon">📱</div>
+          <h3>Tablet</h3>
+          <p>2-column grid layout. Compact nav. Medium images and font sizes.</p>
+        </div>
+        <div class="res-box">
+          <div class="icon">📲</div>
+          <h3>Mobile</h3>
+          <p>Single column layout. Stacked nav links. Smaller text and images.</p>
+        </div>
+      </div>
+      <p style="margin-top:18px; font-size:0.9em; color:#666; text-align:center;">
+        🔧 Media query breakpoints used:
+        <strong>768px</strong> (tablet) and <strong>480px</strong> (mobile)
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    Built by
+    <a href="https://www.linkedin.com/in/sivapriya-tamilmani-09a112332" target="_blank">
+      Sivapriya Tamilmani
+    </a>
+    &nbsp;|&nbsp; Task 3 of 5 &nbsp;|&nbsp;
+    <a href="https://apexplanet.in" target="_blank">ApexPlanet Software Pvt. Ltd.</a>
+    Internship 🌟
+  </footer>
+
+  <script>
+    /* ============================
+       IMAGE CAROUSEL
+    ============================ */
+    let currentSlide = 0;
+    const totalSlides = 5;
+    const track = document.getElementById('carouselTrack');
+    const dotsContainer = document.getElementById('carouselDots');
+    const label = document.getElementById('carouselLabel');
+
+    // Build dots dynamically
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if (i === 0) dot.classList.add('active');
+      dot.onclick = () => goToSlide(i);
+      dotsContainer.appendChild(dot);
+    }
+
+    function moveCarousel(direction) {
+      currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+      updateCarousel();
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateCarousel();
+    }
+
+    function updateCarousel() {
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+      document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === currentSlide);
+      });
+      label.textContent = `Slide ${currentSlide + 1} of ${totalSlides}`;
+    }
+
+    // Auto-play every 4 seconds
+    setInterval(() => moveCarousel(1), 4000);
+
+    /* ============================
+       FETCH JOKE FROM PUBLIC API
+    ============================ */
+    let currentJoke = null;
+
+    async function fetchJoke() {
+      const setup     = document.getElementById('jokeSetup');
+      const punchline = document.getElementById('jokePunchline');
+      const loading   = document.getElementById('jokeLoading');
+
+      setup.textContent = '';
+      punchline.style.display = 'none';
+      punchline.textContent = '';
+      loading.style.display = 'block';
+
+      try {
+        const res  = await fetch(
+          'https://v2.jokeapi.dev/joke/Programming?type=twopart&safe-mode'
+        );
+        const data = await res.json();
+        loading.style.display = 'none';
+
+        if (data.type === 'twopart') {
+          currentJoke = data;
+          setup.textContent = '🤔 ' + data.setup;
+        } else {
+          setup.textContent = '😄 ' + data.joke;
+          currentJoke = null;
+        }
+      } catch (err) {
+        loading.style.display = 'none';
+        setup.textContent = '😔 Could not fetch a joke. Check your internet connection!';
+        currentJoke = null;
+      }
+    }
+
+    function revealPunchline() {
+      const punchline = document.getElementById('jokePunchline');
+      const setup     = document.getElementById('jokeSetup');
+
+      if (!currentJoke) {
+        setup.textContent = '👆 First fetch a joke, then reveal the punchline!';
+        return;
+      }
+      punchline.textContent = '😄 ' + currentJoke.delivery;
+      punchline.style.display = 'block';
+    }
+
+    // Auto-fetch a joke on page load
+    fetchJoke();
+  </script>
+
+</body>
+</html>
