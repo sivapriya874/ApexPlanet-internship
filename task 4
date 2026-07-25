@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 4 - Portfolio Website</title>
+
+  <style>
+    /* Paste the CSS code from Part 2 here */
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">🚀 Sivapriya</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#todo">To-Do</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="about">
+  <h1>Hi, I'm <span>Sivapriya</span> 👋</h1>
+  <p>Web Development Intern @ ApexPlanet Software Pvt. Ltd.</p>
+  <p>
+    I'm a passionate web development intern currently mastering
+    HTML, CSS, and JavaScript.
+  </p>
+  <a href="#projects" class="btn">View My Projects 🚀</a>
+</section>
+
+<section id="projects">
+  <h2>My Projects</h2>
+  <div class="projects-grid" id="projectsGrid"></div>
+</section>
+
+<section id="todo">
+  <h2>📝 To-Do App</h2>
+
+  <input type="text" id="todo-input" placeholder="Add a task">
+  <button onclick="addTodo()">Add</button>
+
+  <ul id="todo-list"></ul>
+</section>
+
+<section id="products">
+  <h2>🛒 Product Listing</h2>
+
+  <input type="text" id="search-input"
+         placeholder="Search products..."
+         oninput="renderProducts()">
+
+  <div id="products-grid"></div>
+</section>
+
+<section id="contact">
+  <h2>📬 Contact Me</h2>
+
+  <input type="text" id="c-name" placeholder="Your Name">
+  <input type="email" id="c-email" placeholder="Your Email">
+  <textarea id="c-msg" placeholder="Your Message"></textarea>
+
+  <button onclick="submitContact()">Send Message</button>
+
+  <p id="contact-ok"></p>
+</section>
+
+<script>
+  /* Paste the JavaScript code from Part 3 here */
+</script>
+
+</body>
+</html>
